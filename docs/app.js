@@ -9,7 +9,7 @@ let fullData;
 d3.json(url).then((data) => {    
     fullData = data;
     const testSubjects = data.names;
-    const filterData = getSamplesById(testSubject[0], data);
+    const filterData = getSamplesById(testSubjects[0], data);
     sample_values = filterData.sample_values;
     otu_ids = filterData.otu_ids;
     otu_labels = filterData.otu_labels;
@@ -17,8 +17,8 @@ d3.json(url).then((data) => {
     populateDropdown(testSubjects);
     barChart(otu_ids, sample_values, otu_labels);    
     bubbleChart(otu_ids, sample_values, otu_labels);
-    populateDemographics(testSubject[0], data);
-    gaugeChart(testSubject[0], data);
+    populateDemographics(testSubjects[0], data);
+    gaugeChart(testSubjects[0], data);
 });
 
 function populateDropdown(subjectNames) {
