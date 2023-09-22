@@ -66,6 +66,7 @@ function bubbleChart(ids, values, labels) {
         marker: {
             size: values,
             color: ids,
+            colorscale: "Cividis",
             sizeref: 2
         }        
     };
@@ -90,6 +91,7 @@ function animateBubbleChart(ids, values, labels) {
         marker: {
             size: values,
             color: ids,
+            colorscale: "Cividis",
             sizeref: 2
         }        
     };
@@ -125,12 +127,16 @@ function barChart(ids, values, labels) {
         orientation: "h",
         x: values.slice(0, 10).reverse(),
         y: y_data.slice(0, 10).reverse(),
-        text: labels.slice(0, 10).reverse()
+        text: labels.slice(0, 10).reverse(),
+        marker: {
+            color: ids,
+            colorscale: "Cividis"
+        }
     };
 
     const plotData = [trace];
     const layout = {
-        title: "Top 10 Specimens Collected"
+        title: "<b>Top 10 Specimens Collected</b>"
     };
 
     Plotly.newPlot("bar", plotData, layout)
@@ -211,7 +217,7 @@ function gaugeChart(id, data) {
             color: '850000'
         }
         }],
-    title: '<b>Gauge</b> <br> Wash Frequency',
+    title: '<b>Belly Button Wash Frequency</b> <br> Scrubs per Week',
     height: 500,
     width: 500,
     xaxis: {zeroline:false, showticklabels:false,
