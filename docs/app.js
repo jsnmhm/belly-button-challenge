@@ -149,7 +149,11 @@ function animateBarChart(ids, values, labels) {
         orientation: "h",
         x: values.slice(0, 10).reverse(),
         y: y_data.slice(0, 10).reverse(),
-        text: labels.slice(0, 10).reverse()
+        text: labels.slice(0, 10).reverse(),
+        marker: {
+            color: ids,
+            colorscale: "Cividis"
+        }
     };
 
     const animation = {
