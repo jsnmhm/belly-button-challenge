@@ -130,7 +130,7 @@ function barChart(ids, values, labels) {
         text: labels.slice(0, 10).reverse(),
         marker: {
             color: values,
-            colorscale: "Cividis"
+            colorscale: "Blues"
         }
     };
 
@@ -152,7 +152,7 @@ function animateBarChart(ids, values, labels) {
         text: labels.slice(0, 10).reverse(),
         marker: {
             color: values,
-            colorscale: "Cividis"
+            colorscale: "Blues"
         }
     };
 
