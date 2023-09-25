@@ -6,7 +6,10 @@ let otu_ids;
 let otu_labels;
 let fullData;
 
-d3.json(url).then((data) => {    
+d3.json(url).then((data) => {   
+    // this function loads the data from the given url 
+    // and then initializes all dashboard objects
+    // with the first test subject in the data set
     fullData = data;
     const testSubjects = data.names;
     const filterData = getSamplesById(testSubjects[0], data);
@@ -22,6 +25,8 @@ d3.json(url).then((data) => {
 });
 
 function populateDropdown(subjectNames) {
+    // loops through data set and adds subject id
+    // to dropdown
     const dropDown = d3.select("#selDataset").node();
     for(let i = 0; i < subjectNames.length; i++) {
         const opt = subjectNames[i];
@@ -32,7 +37,8 @@ function populateDropdown(subjectNames) {
     }
 }
 
-function getSamplesById(id, data) {    
+function getSamplesById(id, data) {  
+    // gets data for one test subject  
     const sampleData = data.samples.find(sample => sample.id === id);
 
     if (sampleData) {
@@ -43,6 +49,7 @@ function getSamplesById(id, data) {
 }
 
 function populateDemographics(id, data) {
+    // find the metadata for an id and add their info to sample-metadata container
     const demo = data.metadata.find(mtd => mtd.id.toString() === id);
     demoDisplay = d3.select("#sample-metadata");
 
@@ -83,6 +90,7 @@ function bubbleChart(ids, values, labels) {
 }
 
 function animateBubbleChart(ids, values, labels) {
+    // animates transition to new data 
     const updatedTrace = {
         x: ids,
         y: values,
@@ -120,7 +128,8 @@ function animateBubbleChart(ids, values, labels) {
     });
 }
 
-function barChart(ids, values, labels) {    
+function barChart(ids, values, labels) {  
+    // get top 10 samples and display largest to smallest  
     const y_data = ids.map(otu_ids => "OTU " + otu_ids);
     const trace = {
         type: "bar",
@@ -143,6 +152,7 @@ function barChart(ids, values, labels) {
 }
 
 function animateBarChart(ids, values, labels) {
+    //animate transition to new data
     const y_data = ids.map(otu_ids => "OTU " + otu_ids);
     const updatedTrace = {
         type: "bar",
@@ -173,15 +183,19 @@ function animateBarChart(ids, values, labels) {
 }
 
 function gaugeChart(id, data) {
+    // function based on code found here: https://www.instructables.com/Showing-Charts-and-Gauges-of-IOT-Device-Data-Using/
+    // 
     const demo = data.metadata.find(mtd => mtd.id.toString() === id);
     const wfreq = demo.wfreq;    
     
+    // determine where needle is pointing
     var degrees = 180 - (wfreq * 20),
         radius = .5;
     var radians = degrees * Math.PI / 180;
     var x = radius * Math.cos(radians);
     var y = radius * Math.sin(radians);
 
+    // set shape of needle
     var mainPath = 'M -.0 -0.025 L .0 0.025 L ',
         pathX = String(x),
         space = ' ',
@@ -193,9 +207,10 @@ function gaugeChart(id, data) {
     x: [0], y:[0],
         marker: {size: 28, color:'850000'},
         showlegend: false,
-        name: 'speed',
+        name: 'frequency',
         text: wfreq,
         hoverinfo: 'skip'},
+    // create 9 equal size pie slices for top of pie chart, and one bottome section of pie
     { values: [50/9, 50/9, 50/9, 50/9, 50/9, 50/9, 50/9, 50/9, 50/9,  50],
     rotation: 90,
     text: ['8-9', '7-8', '6-7', '5-6',
@@ -235,6 +250,7 @@ function gaugeChart(id, data) {
 
 
 function optionChanged(val) {
+    //handler called when test subject id in dropdown is changed
     newData = getSamplesById(val, fullData);
     
     sample_values = newData.sample_values;
